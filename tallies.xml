@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tallies>
+  <filter id="1" type="surface">
+    <bins>6</bins>
+  </filter>
+  <filter id="2" type="energy">
+    <bins>59999.0 60001.0</bins>
+  </filter>
+  <filter id="3" type="cell">
+    <bins>6</bins>
+  </filter>
+  <filter id="4" type="energy">
+    <bins>59970.0 60030.0</bins>
+  </filter>
+  <tally id="1" name="USRBDX equivalent: photon current vao detector">
+    <filters>1 2</filters>
+    <scores>current</scores>
+  </tally>
+  <tally id="2" name="Compton scatter trong mau">
+    <filters>3 4</filters>
+    <scores>incoherent-scatter</scores>
+  </tally>
+  <tally id="3" name="Total reaction trong mau">
+    <filters>3 4</filters>
+    <scores>total</scores>
+  </tally>
+  <tally id="4" name="Coherent scatter trong mau">
+    <filters>3 4</filters>
+    <scores>coherent-scatter</scores>
+  </tally>
+</tallies>

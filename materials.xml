@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<materials>
+  <material id="1" name="Pb (collimators + shield)">
+    <density value="11.34" units="g/cm3"/>
+    <nuclide name="Pb204" ao="0.014"/>
+    <nuclide name="Pb206" ao="0.241"/>
+    <nuclide name="Pb207" ao="0.221"/>
+    <nuclide name="Pb208" ao="0.524"/>
+  </material>
+  <material id="2" name="Mau (S8)">
+    <density value="4.411" units="g/cm3"/>
+    <nuclide name="B10" wo="0.025653641035002384"/>
+    <nuclide name="B11" wo="0.1141063589649976"/>
+    <nuclide name="O16" wo="0.43720694863347087"/>
+    <nuclide name="O17" wo="0.00017652477683430013"/>
+    <nuclide name="O18" wo="0.0009865265896947713"/>
+    <nuclide name="Si28" wo="0.0429416819779979"/>
+    <nuclide name="Si29" wo="0.002258360086848361"/>
+    <nuclide name="Si30" wo="0.001539957935153736"/>
+    <nuclide name="Ca40" wo="0.06908418354991742"/>
+    <nuclide name="Ca42" wo="0.0004841087708907224"/>
+    <nuclide name="Ca43" wo="0.00010341965088901552"/>
+    <nuclide name="Ca44" wo="0.0016351019751983046"/>
+    <nuclide name="Ca46" wo="3.2779162815050596e-06"/>
+    <nuclide name="Ca48" wo="0.00015990813682303608"/>
+    <nuclide name="Gd152" wo="0.0005867261210384273"/>
+    <nuclide name="Gd154" wo="0.006479553256505088"/>
+    <nuclide name="Gd155" wo="0.044275923352798535"/>
+    <nuclide name="Gd156" wo="0.06163347493329593"/>
+    <nuclide name="Gd157" wo="0.04742361692058739"/>
+    <nuclide name="Gd158" wo="0.07575147352121145"/>
+    <nuclide name="Gd160" wo="0.0675092318945632"/>
+  </material>
+  <material id="3" name="NaI(Tl) - detector">
+    <density value="3.67" units="g/cm3"/>
+    <nuclide name="Na23" wo="0.15337"/>
+    <nuclide name="I127" wo="0.84663"/>
+  </material>
+</materials>

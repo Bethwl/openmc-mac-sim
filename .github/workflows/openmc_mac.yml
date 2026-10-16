@@ -1,0 +1,75 @@
+name: OpenMC MAC Simulation (2026.10.16_Paper10.1_MAC_OpenMC)
+
+on:
+  workflow_dispatch:
+    inputs:
+      primaries:
+        description: 'Số hạt mỗi job (10^8)'
+        required: true
+        default: '100000000'
+        type: string
+      gdrive_folder:
+        description: 'Google Drive Project Folder ID'
+        required: true
+        default: '1FVMmlEQWDki_8A4fU8515zy_EcnM9yM5'
+        type: string
+
+jobs:
+  run-openmc:
+    name: OpenMC Runner #${{ matrix.runner_id }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        runner_id: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Micromamba and Install OpenMC
+        shell: bash
+        run: |
+          echo ">>> [INSTALL] Downloading micromamba..."
+          curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xj bin/micromamba -O > /tmp/micromamba
+          chmod +x /tmp/micromamba
+
+          echo ">>> [INSTALL] Installing OpenMC via micromamba..."
+          /tmp/micromamba create -y -p /tmp/openmc_env -c conda-forge \
+            openmc python=3.11 pandas numpy h5py \
+            google-api-python-client google-auth-httplib2 google-auth-oauthlib
+          echo ">>> [INSTALL] OpenMC installed successfully!"
+
+      - name: Reassemble and Extract Nuclear Data Slice
+        shell: bash
+        run: |
+          echo ">>> [DATA] Reassembling nuclear data slice from packages..."
+          cat packages/openmc_data.part_* > /tmp/openmc_nuclear_data_slice.tar.gz
+          echo ">>> [DATA] Extracting nuclear data into /tmp/nuclear_data..."
+          tar -xzf /tmp/openmc_nuclear_data_slice.tar.gz -C /tmp/
+          rm -f /tmp/openmc_nuclear_data_slice.tar.gz
+          ls -la /tmp/nuclear_data/
+          ls -la /tmp/nuclear_data/photon/
+          ls -la /tmp/nuclear_data/neutron/ | head -n 15
+
+      - name: Run OpenMC Worker & Stream to Google Drive
+        env:
+          GDRIVE_OAUTH_JSON: ${{ secrets.GDRIVE_OAUTH_JSON }}
+          GDRIVE_FOLDER_ID: ${{ github.event.inputs.gdrive_folder }}
+        run: |
+          eval "$(/tmp/micromamba shell hook --shell bash)"
+          micromamba activate /tmp/openmc_env
+          export PATH="/tmp/openmc_env/bin:$PATH"
+          export OPENMC_CROSS_SECTIONS="/tmp/nuclear_data/cross_sections.xml"
+          export OMP_NUM_THREADS=$(nproc)
+
+          echo ">>> [RUN] Starting OpenMC task with $OMP_NUM_THREADS threads..."
+          python3 run_openmc_task.py \
+            --runner-id ${{ matrix.runner_id }} \
+            --num-runners 10 \
+            --primaries ${{ github.event.inputs.primaries }} \
+            --gdrive-folder "${{ github.event.inputs.gdrive_folder }}" \
+            --plan-file "openmc_plan_18acc.json" \
+            --github-user "${{ github.repository_owner }}" \
+            --timeout-hours 5.0

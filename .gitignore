@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.h5
+*.out
+*.xlsx
+*.csv
+!checklist_openmc_mac.csv
+Input_Decks.zip
+tmp_xml_decks/
+run_*/
+quick_test/
+legacy_suite_v1/
+.git/
+openmc_nuclear_data_slice.tar.gz

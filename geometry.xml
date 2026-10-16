@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<geometry>
+  <cell id="1" name="Pre-collimator Pb" material="1" region="1 -3 10 -14" universe="1"/>
+  <cell id="2" name="Lo pre-collimator (truoc nguon) [VOID]" material="void" region="1 -2 -10" universe="1"/>
+  <cell id="3" name="Lo pre-collimator (sau nguon, chua nguon) [VOID]" material="void" region="2 -3 -10" universe="1"/>
+  <cell id="4" name="Collimator 1 Pb" material="1" region="3 -4 9 -15" universe="1"/>
+  <cell id="5" name="Lo chuan truc collimator 1 [VOID]" material="void" region="3 -4 -9" universe="1"/>
+  <cell id="6" name="Mau S8 day 3.0cm" material="2" region="4 -5 -11" universe="1"/>
+  <cell id="7" name="Collimator 2 Pb" material="1" region="5 -6 9 -16" universe="1"/>
+  <cell id="8" name="Lo chuan truc collimator 2 [VOID]" material="void" region="5 -6 -9" universe="1"/>
+  <cell id="9" name="Dau do NaI(Tl)" material="3" region="6 -7 -12" universe="1"/>
+  <cell id="10" name="Vo chi boc ngoai" material="1" region="(6 -7 12 -13) | (8 -7 -17 (-1 | 7 | 13))" universe="1"/>
+  <cell id="11" name="Chan khong con lai trong airbore [VOID]" material="void" region="1 -7 -13 (-1 | 3 | -10 | 14) (-1 | 2 | 10) (-2 | 3 | 10) (-3 | 4 | -9 | 15) (-3 | 4 | 9) (-4 | 5 | 11) (-5 | 6 | -9 | 16) (-5 | 6 | 9) (-6 | 7 | 12) (-6 | 7 | -12 | 13) (-8 | 7 | 17 | (1 -7 -13))" universe="1"/>
+  <cell id="12" name="Chan khong ngoai vo chi, trong world [VOID]" material="void" region="-18 (-8 | 7 | 17)" universe="1"/>
+  <surface id="1" type="z-plane" coeffs="0.0"/>
+  <surface id="2" type="z-plane" coeffs="0.5"/>
+  <surface id="3" type="z-plane" coeffs="1.0"/>
+  <surface id="4" type="z-plane" coeffs="7.0"/>
+  <surface id="5" type="z-plane" coeffs="10.0"/>
+  <surface id="6" type="z-plane" coeffs="13.0"/>
+  <surface id="7" type="z-plane" coeffs="18.0"/>
+  <surface id="8" type="z-plane" coeffs="-5.0"/>
+  <surface id="9" type="z-cylinder" coeffs="0.0 0.0 0.5"/>
+  <surface id="10" type="z-cylinder" coeffs="0.0 0.0 1.0"/>
+  <surface id="11" type="z-cylinder" coeffs="0.0 0.0 1.0"/>
+  <surface id="12" type="z-cylinder" coeffs="0.0 0.0 2.5"/>
+  <surface id="13" type="z-cylinder" coeffs="0.0 0.0 3.5"/>
+  <surface id="14" type="z-cylinder" coeffs="0.0 0.0 3.5"/>
+  <surface id="15" type="z-cylinder" coeffs="0.0 0.0 3.5"/>
+  <surface id="16" type="z-cylinder" coeffs="0.0 0.0 2.5"/>
+  <surface id="17" type="z-cylinder" coeffs="0.0 0.0 8.5"/>
+  <surface id="18" type="sphere" boundary="vacuum" coeffs="0.0 0.0 0.0 100.0"/>
+</geometry>

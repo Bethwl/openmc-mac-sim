@@ -1,0 +1,52 @@
+========================================================================================
+HUONG DAN SU DUNG OPENMC CHO BAI 1 (PAPER 10.1 - PNE 2022) - PHIEN BAN TOI UU MOI
+Kien truc toi uu: Run_nosample.py + Run_sample.py + run_all.py + Export_excel.py
+Mo hinh chuan: 8 mau thuy tinh Silicoborate Gadolinium (S1 -> S8)
+23 muc nang luong (15 keV -> 15 MeV) | Be day: 0.005 cm (15-40 keV) va 0.1 -> 3.0 cm
+========================================================================================
+
+Thu muc lam viec:
+  C:\2026.9.28_Paper10\Openmc_mac\   (WSL: /mnt/c/2026.9.28_Paper10/Openmc_mac)
+
+Cac cai tien vuot troi trong phien ban toi uu moi:
+  1. Hinh hoc chuan Narrow-Beam voi Surface Current Tally tai mat truoc detector NaI (z13)
+     va EnergyFilter hep [E0 - 1 eV, E0 + 1 eV], giam thoi gian tinh tu 15s xuong chi ~0.8-1.5s/run!
+  2. Tinh dong thoi ty le R_Compton = mu_Compton / (mu_Total - mu_Rayleigh) phuc vu tinh Zeq
+     theo phuong phap chuan Manohara/Hanagodimath.
+  3. Quan ly tap trung toan bo thong so trong Config_Simulation.xlsx (2 Sheet: Sample_Composition va Energy_Thickness).
+  4. Script run_all.py ho tro: --resume (tiep tuc tu dong bo qua diem da chay), --emin/--emax, --particles, --batches.
+  5. Script Export_excel.py tu dong xuat openmc_export.xlsx gom 7 Sheet truc quan:
+     MAC, T_Transmittance, R_Compton, Do_day_mau, QA_Transmittance, Thoi_gian_chay, Benchmark_Table2.
+
+----------------------------------------------------------------------------------------
+CACH 1: CHAY TEST NHANH MOT MUC NANG LUONG
+----------------------------------------------------------------------------------------
+Vi du test muc 60 keV cho ca 8 mau:
+  cd C:\2026.9.28_Paper10\Openmc_mac
+  wsl -d Ubuntu-24.04 bash -c "cd /mnt/c/2026.9.28_Paper10/Openmc_mac && /home/ht/miniconda3/envs/openmc/bin/python run_all.py --config-excel Config_Simulation.xlsx --emin 60 --emax 60 --particles 10000 --batches 10"
+
+Sau khi chay xong, xuat file Excel:
+  wsl -d Ubuntu-24.04 bash -c "cd /mnt/c/2026.9.28_Paper10/Openmc_mac && /home/ht/miniconda3/envs/openmc/bin/python Export_excel.py"
+
+----------------------------------------------------------------------------------------
+CACH 2: CHAY TOAN BO 23 MUC NANG LUONG CHO BAI BAO
+----------------------------------------------------------------------------------------
+1. Chay toan bo pipeline:
+  wsl -d Ubuntu-24.04 bash -c "cd /mnt/c/2026.9.28_Paper10/Openmc_mac && /home/ht/miniconda3/envs/openmc/bin/python run_all.py --config-excel Config_Simulation.xlsx --particles 10000 --batches 100"
+
+  (Neu bi ngat quang giua chung, chi can them tham so --resume de chay tiep ma khong bi chay lai:
+   ... python run_all.py --config-excel Config_Simulation.xlsx --resume)
+
+2. Xuat ket qua ra Excel:
+  wsl -d Ubuntu-24.04 bash -c "cd /mnt/c/2026.9.28_Paper10/Openmc_mac && /home/ht/miniconda3/envs/openmc/bin/python Export_excel.py"
+
+File ket qua openmc_export.xlsx se duoc tao ra voi day du 7 Sheet:
+  - MAC: Bang ma tran he so suy giam khoi luong.
+  - T_Transmittance: Ma tran do truyen qua, tu dong to do canh bao neu T < 2% hoac T > 90%.
+  - R_Compton: Ty le R phan ung Compton chuan hoa phuc vu tinh Zeq.
+  - Do_day_mau: Bang tra cuu be day mau da dung.
+  - QA_Transmittance: Bang kiem dinh do tin cay so dem va sai so thong ke.
+  - Thoi_gian_chay: Tong ket thoi gian tung job va toan bo qua trinh.
+  - Benchmark_Table2: So sanh truc tiep va tinh sai so tuong doi RD% so voi Table 2 Paper 1 (XCOM va MCNPX).
+
+========================================================================================
