@@ -94,7 +94,7 @@ def main():
         sys.exit(1)
 
     with open(plan_path, "r", encoding="utf-8") as pf:
-        full_plan = json.load(f=pf)
+        full_plan = json.load(pf)
 
     acc_plan = full_plan.get(acc_name)
     if not acc_plan:
